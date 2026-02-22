@@ -7,6 +7,8 @@ import pygame.locals
 pygame.init()
 pygame.font.init()
 
+
+
 class Bullets:
     def __init__(self, surface: pygame.Surface, x: float, y: float, vx: float, vy: float) -> None:
         self.surface = surface
@@ -182,13 +184,6 @@ def main():
             pygame.quit()
             sys.exit()
 
-        # if state == "start":
-        #     screen.fill("#00BE49")
-        # elif state == "game":
-        #     screen.fill("#5FDBF7")
-        # elif state == "dead":
-        #     screen.fill("#330000")
-        
         right_score_image = font.render(f"{right_score}", True, "#ffffff")
         left_score_image = font.render(f"{left_score}", True, "#ffffff")
         screen.blit(
@@ -197,24 +192,30 @@ def main():
         screen.blit(
             right_score_image, (0.8 * screen.get_width(), 0.1 * screen.get_height())
         )
-
+        # if state == "start":
+        #     screen.fill("#00BE49")
+        # elif state == "game":
+        #     screen.fill("#5FDBF7")
+        # elif state == "dead":
+        #     screen.fill("#330000")
+        
         for event in pygame.event.get():
             if event.type == pygame.locals.QUIT:
                 pygame.quit()
                 sys.exit()
-            # elif event.type == pygame.locals.KEYDOWN:
-            #     if event.key == pygame.K_SPACE:
-            #         if state == "start":
-            #             state = "game"
-            #         elif state == "game":
-            #             state = "game"
-            #     if event.key == pygame.K_r:
-            #         if state == "dead":
-            #             state = "start"
+            elif event.type == pygame.locals.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    if state == "start":
+                        state = "game"
+                    elif state == "game":
+                        state = "game"
+                if event.key == pygame.K_r:
+                    if state == "dead":
+                        state = "start"
 
         pygame.display.flip()
         fps_clock.tick(fps)
 
-
 if __name__ == "__main__":
     main()
+
