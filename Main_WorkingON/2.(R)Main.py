@@ -203,6 +203,21 @@ class Wall:
         r = self.get_rect()
         pygame.draw.rect(self.surface, "#964B00", r)
 
+<<<<<<< HEAD:Main_WorkingON/2.(R)Main.py
+=======
+class Level:
+    ...
+#     class Level1:
+#         ...
+    
+#     class Level2:
+#         ...
+
+#     class Level3:
+#         ...
+    
+
+>>>>>>> 16f1c3f3ec2c6d077ad8bc690cbadc17c67eed47:copyofmainfortesting/copymain
 def main():
     fps = 60
     fps_clock = pygame.time.Clock()
@@ -243,6 +258,10 @@ def main():
         "#8d4fd3",
     )
 
+<<<<<<< HEAD:Main_WorkingON/2.(R)Main.py
+=======
+    
+>>>>>>> 16f1c3f3ec2c6d077ad8bc690cbadc17c67eed47:copyofmainfortesting/copymain
     wall = Wall(
         screen,
         0.25 * screen.get_width(),
@@ -313,6 +332,9 @@ def main():
             screen.blit(win_text, (screen.get_width() / 2 - 200, screen.get_height() / 2 - 50))
             pygame.display.flip()
             pygame.time.wait(3000)
+            
+            #here once someone wins, import level 2
+
             pygame.quit()
             sys.exit()
         
@@ -338,6 +360,7 @@ def main():
         wall3.display()
         wall4.update()
         wall4.display()
+
 
         pygame.display.flip()
         fps_clock.tick(fps)
