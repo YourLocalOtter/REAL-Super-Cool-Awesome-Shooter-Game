@@ -108,6 +108,30 @@ class Shooters:
             bullet.display()
 
 
+class Wall:
+
+    def __init__(
+        self,
+        surface: pygame.Surface,
+        x: float,
+        y: float,
+        width: float,
+        height: float,
+    ) -> None:
+        self.surface = surface
+        self.x, self.y = x, y
+        self.width, self.height = width, height
+
+
+    def update(self) -> None:
+        return None
+
+    def display(self) -> None:
+        rect_x = self.x - self.width / 2
+        rect_y = self.y - self.height / 2
+        pygame.draw.rect(self.surface, "#964B00", (rect_x, rect_y, self.width, self.height))
+
+
 def main():
     fps = 60
     fps_clock = pygame.time.Clock()
@@ -149,6 +173,46 @@ def main():
     )
     
     state = "start"
+
+
+    wall = Wall(
+        screen,
+        0.25 * screen.get_width(),
+        screen.get_height() / 2,
+        30,
+        130,
+
+    )
+
+
+    wall2 = Wall(
+        screen,
+        0.75 * screen.get_width(), #place on screen on the x value
+        screen.get_height() / 2,
+        30,
+        130,
+#y position, width, length
+    )
+
+    wall3 = Wall(
+        screen,
+        0.50 * screen.get_width(),
+        screen.get_height() / 3.8,
+        30,
+        160,
+
+    )
+
+
+    wall4 = Wall(
+        screen,
+        0.50 * screen.get_width(),
+        screen.get_height() / 1.28,
+        30,
+        160,
+
+    )
+
     
     while True:
         screen.fill("#82E1FE")
@@ -212,6 +276,25 @@ def main():
                 if event.key == pygame.K_r:
                     if state == "dead":
                         state = "start"
+            # elif event.type == pygame.locals.KEYDOWN:
+            #     if event.key == pygame.K_SPACE:
+            #         if state == "start":
+            #             state = "game"
+            #         elif state == "game":
+            #             state = "game"
+            #     if event.key == pygame.K_r:
+            #         if state == "dead":
+            #             state = "start"
+                
+
+        wall.update()
+        wall.display()
+        wall2.update()
+        wall2.display()
+        wall3.update()
+        wall3.display()
+        wall4.update()
+        wall4.display()
 
         pygame.display.flip()
         fps_clock.tick(fps)
