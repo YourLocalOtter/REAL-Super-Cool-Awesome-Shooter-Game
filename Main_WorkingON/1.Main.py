@@ -7,8 +7,9 @@ import pygame.locals
 pygame.init()
 pygame.font.init()
 
-class Bullets:
 
+
+class Bullets:
     def __init__(self, surface: pygame.Surface, x: float, y: float, vx: float, vy: float) -> None:
         self.surface = surface
         self.x = x
@@ -17,44 +18,27 @@ class Bullets:
         self.vy = vy
         self.radius = 5
 
-    def get_rect(self) -> pygame.Rect:
-        return pygame.Rect(
-            int(self.x - self.radius),
-            int(self.y - self.radius),
-            int(self.radius * 2),
-            int(self.radius * 2),
-        )
-
-    def teleport_offscreen(self) -> None:
-        self.x = -1000
-        self.y = -1000
-
-    def update(self, walls: list['Wall']) -> bool:
+    def update(self) -> bool:
         self.x += self.vx
         self.y += self.vy
-
-        brect = self.get_rect()
-        for wall in walls:
-            if brect.colliderect(wall.get_rect()):
-                self.teleport_offscreen()
-                return False
-
+        
         if (self.x - self.radius < 0 or self.x + self.radius > self.surface.get_width() or
             self.y - self.radius < 0 or self.y + self.radius > self.surface.get_height()):
             return False
-
+        
         return True
 
     def display(self) -> None:
         pygame.draw.circle(self.surface, "#ffffff", (int(self.x), int(self.y)), self.radius)
-
+    
     def check_collision(self, shooter: 'Shooters') -> bool:
-        if (self.x - self.radius < shooter.x + shooter.width / 2 and
+        if (self.x - self.radius < shooter.x + shooter.width / 2 and 
             self.x + self.radius > shooter.x - shooter.width / 2 and
-            self.y - self.radius < shooter.y + shooter.height / 2 and
+            self.y - self.radius < shooter.y + shooter.height / 2 and 
             self.y + self.radius > shooter.y - shooter.height / 2):
             return True
         return False
+
 
 class Shooters:
 
@@ -87,63 +71,32 @@ class Shooters:
         self.max_bullets = 1
         self.color = color
 
-    
-
     def shoot(self, direction: int) -> None:
         if len(self.bullets) < self.max_bullets:
             bullet_vx = 10 * direction
             bullet_vy = 0.1
             bullet = Bullets(self.surface, self.x, self.y, bullet_vx, bullet_vy)
             self.bullets.append(bullet)
-    
-    def get_rect(self) -> pygame.Rect:
-        return pygame.Rect(
-            int(self.x - self.width / 2),
-            int(self.y - self.height / 2),
-            int(self.width),
-            int(self.height),
-        )
 
-    def update(self, walls: list['Wall']) -> None:
+    def update(self) -> None:
         keys_held = pygame.key.get_pressed()
         self.vx = self.speed * (keys_held[self.key_right] - keys_held[self.key_left])
         self.vy = self.speed * (keys_held[self.key_down] - keys_held[self.key_up])
-        rect = self.get_rect()
-        rect.x += int(self.vx)
-
-        if rect.left < 0:
-            rect.left = 0
-        if rect.right > self.surface.get_width():
-            rect.right = self.surface.get_width()
-
-        for wall in walls:
-            wrect = wall.get_rect()
-            if rect.colliderect(wrect):
-                if self.vx > 0:
-                    rect.right = wrect.left
-                elif self.vx < 0:
-                    rect.left = wrect.right
-
-        rect.y += int(self.vy)
-
-        if rect.top < 0:
-            rect.top = 0
-        if rect.bottom > self.surface.get_height():
-            rect.bottom = self.surface.get_height()
-
-        for wall in walls:
-            wrect = wall.get_rect()
-            if rect.colliderect(wrect):
-                if self.vy > 0:
-                    rect.bottom = wrect.top
-                elif self.vy < 0:
-                    rect.top = wrect.bottom
-
-        self.x = rect.centerx
-        self.y = rect.centery
-
+        
+        self.x += self.vx
+        self.y += self.vy
+        
+        if self.x < self.width/2:
+            self.x = self.width/2
+        if self.x > self.surface.get_width() - self.width/2:
+            self.x = self.surface.get_width() - self.width/2
+        if self.y < self.height/2:
+            self.y = self.height/2
+        if self.y > self.surface.get_height() - self.height/2:
+            self.y = self.surface.get_height() - self.height/2
+        
         for bullet in self.bullets[:]:
-            if not bullet.update(walls):
+            if not bullet.update():
                 self.bullets.remove(bullet)
 
     def display(self) -> None:
@@ -154,29 +107,8 @@ class Shooters:
         for bullet in self.bullets:
             bullet.display()
 
+
 class Wall:
-    
-    def __init__(self, surface: pygame.Surface, x: float, y: float, width: float, height: float) -> None:
-        self.surface = surface
-        self.x, self.y = x, y
-        self.width, self.height = width, height
-
-    def get_rect(self) -> pygame.Rect:
-        return pygame.Rect(
-            int(self.x - self.width / 2),
-            int(self.y - self.height / 2),
-            int(self.width),
-            int(self.height),
-        )
-
-    def update(self) -> None:
-        return None
-
-    def display(self) -> None:
-        r = self.get_rect()
-        pygame.draw.rect(self.surface, "#964B00", r)
-
-class Wall2:
 
     def __init__(
         self,
@@ -199,47 +131,14 @@ class Wall2:
         rect_y = self.y - self.height / 2
         pygame.draw.rect(self.surface, "#964B00", (rect_x, rect_y, self.width, self.height))
 
-class PowerUp_ShootSpeed:
-
-    def __init__(
-        self,
-        surface: pygame.Surface,
-        x: float,
-        y: float,
-        width: float,
-        height: float,
-    ) -> None:
-        self.surface = surface
-        self.x, self.y = x, y
-        self.width, self.height = width, height
-
-    def update(self) -> None:
-        return None
-    
-    def display(self) -> None:
-        rect_x = self.x - self.width / 2
-        rect_y = self.y - self.height / 2
-        pygame.draw.circle(self.surface, "#FF21EA", (rect_x,rect_y), 20, width=0)
-
-class Game:
-    ...
-#     class Level1:
-#         ...
-    
-#     class Level2:
-#         ...
-
-#     class Level3:
-#         ...
-    
 
 def main():
     fps = 60
     fps_clock = pygame.time.Clock()
     pygame.init()
     
-    screen_width = 1000
-    screen_height = 700
+    screen_width = random.randint(700, 1000)
+    screen_height = random.randint(500, 700)
     screen = pygame.display.set_mode((screen_width, screen_height))
     
     font = pygame.font.Font(None, 48)
@@ -272,8 +171,10 @@ def main():
         pygame.K_RETURN,
         "#8d4fd3",
     )
-
     
+    state = "start"
+
+
     wall = Wall(
         screen,
         0.25 * screen.get_width(),
@@ -312,7 +213,6 @@ def main():
 
     )
 
-    walls = [wall, wall2, wall3, wall4]
     
     while True:
         screen.fill("#82E1FE")
@@ -323,11 +223,10 @@ def main():
         if keys_held[p_right.key_shoot]:
             p_right.shoot(1)
         
-        p_left.update(walls)
-        p_right.update(walls)
+        p_left.update()
         p_left.display()
+        p_right.update()
         p_right.display()
-
         
         for bullet in p_left.bullets[:]:
             if bullet.check_collision(p_right):
@@ -346,25 +245,9 @@ def main():
             screen.blit(win_text, (screen.get_width() / 2 - 200, screen.get_height() / 2 - 50))
             pygame.display.flip()
             pygame.time.wait(3000)
-
-            #here once someone wins, import level 2
-            # if winner == True:
-            #     wall = Wall2
-            #     wall2 = Wall2
-            #     wall3 = Wall2
-            #     wall4 = Wall2
-
-
             pygame.quit()
             sys.exit()
 
-        # if state == "start":
-        #     screen.fill("#00BE49")
-        # elif state == "game":
-        #     screen.fill("#5FDBF7")
-        # elif state == "dead":
-        #     screen.fill("#330000")
-        
         right_score_image = font.render(f"{right_score}", True, "#ffffff")
         left_score_image = font.render(f"{left_score}", True, "#ffffff")
         screen.blit(
@@ -373,11 +256,26 @@ def main():
         screen.blit(
             right_score_image, (0.8 * screen.get_width(), 0.1 * screen.get_height())
         )
-
+        # if state == "start":
+        #     screen.fill("#00BE49")
+        # elif state == "game":
+        #     screen.fill("#5FDBF7")
+        # elif state == "dead":
+        #     screen.fill("#330000")
+        
         for event in pygame.event.get():
             if event.type == pygame.locals.QUIT:
                 pygame.quit()
                 sys.exit()
+            elif event.type == pygame.locals.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    if state == "start":
+                        state = "game"
+                    elif state == "game":
+                        state = "game"
+                if event.key == pygame.K_r:
+                    if state == "dead":
+                        state = "start"
             # elif event.type == pygame.locals.KEYDOWN:
             #     if event.key == pygame.K_SPACE:
             #         if state == "start":
@@ -397,11 +295,10 @@ def main():
         wall3.display()
         wall4.update()
         wall4.display()
-    
 
         pygame.display.flip()
         fps_clock.tick(fps)
 
-
 if __name__ == "__main__":
     main()
+
