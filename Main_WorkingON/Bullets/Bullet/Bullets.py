@@ -31,7 +31,7 @@ class Bullets:
         def teleport_offscreen(self) -> None:
             self.x = -1000
             self.y = -1000
-
+            
         def update(self, walls: list['Wall']) -> bool:
             self.x += self.vx
             self.y += self.vy
