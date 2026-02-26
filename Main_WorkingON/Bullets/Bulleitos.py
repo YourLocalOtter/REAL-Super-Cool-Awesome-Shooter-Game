@@ -1,14 +1,10 @@
-import sys
-import random
-
 import pygame
-import pygame.locals
+from typing import TYPE_CHECKING
 
 pygame.init()
-from Walls import Wall
-from Bullets import Bullet
-from Shooters import Shooter
-from Levels import Level
+from Walls.Wall import Wall
+
+from Shooters.Shooter import Shooters
 
 class Bullets:
 
@@ -32,7 +28,7 @@ class Bullets:
             self.x = -1000
             self.y = -1000
 
-        def update(self, walls: list['Wall']) -> bool:
+        def update(self, walls: list[Wall]) -> bool:
             self.x += self.vx
             self.y += self.vy
 

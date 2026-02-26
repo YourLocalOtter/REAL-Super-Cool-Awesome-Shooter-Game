@@ -7,7 +7,9 @@ import pygame.locals
 pygame.init()
 pygame.font.init()
 
-from Bullets import Bullets
+from Bullets.Bulleitos import Bullets
+from Walls.Wall import Wall
+
 
 class Shooters:
 
@@ -44,7 +46,7 @@ class Shooters:
         def shoot(self, direction: int) -> None:
             if len(self.bullets) < self.max_bullets:
                 bullet_vx = 10 * direction
-                bullet_vy = 0.1
+                bullet_vy = 0
                 bullet = Bullets(self.surface, self.x, self.y, bullet_vx, bullet_vy)
                 self.bullets.append(bullet)
         

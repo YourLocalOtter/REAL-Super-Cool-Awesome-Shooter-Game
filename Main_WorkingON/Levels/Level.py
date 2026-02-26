@@ -7,7 +7,7 @@ import pygame.locals
 pygame.init()
 pygame.font.init()
 
-from Walls import Wall
+from Walls.Wall import Wall
 
 class Level:
         def __init__(self, surface: pygame.Surface, level_num: int = 1) -> None:
