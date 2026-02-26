@@ -4,8 +4,8 @@ import random
 import pygame
 import pygame.locals
 
-from Shooter import Shooter
-from Level import Level
+from shooter import Shooter
+from level import Level
 
 Leval = 0
 
@@ -18,6 +18,9 @@ def main():
     screen_width = random.randint(700, 1000)
     screen_height = random.randint(500, 700)
     screen = pygame.display.set_mode((screen_width, screen_height))
+    
+    background_image = pygame.image.load("background.jpg")
+    background_image = pygame.transform.scale(background_image, (screen_width, screen_height))
     
     font = pygame.font.Font(None, 48)
     left_score = 0
@@ -55,7 +58,13 @@ def main():
     )
 
     while True:
-        screen.fill("#82E1FE")
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+            screen.blit(background_image, (0, 0))
+
         
         keys_held = pygame.key.get_pressed()
         if keys_held[p_left.key_shoot]:

@@ -3,7 +3,7 @@ import pygame
 pygame.init()
 pygame.font.init()
 
-from Wall import Wall
+from wall import Wall
 
 
 class Level:

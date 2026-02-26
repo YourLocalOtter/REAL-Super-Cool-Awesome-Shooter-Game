@@ -1,7 +1,7 @@
 import pygame
 
-from Bullet import Bullets
-from Wall import Wall
+from bullet import Bullet
+from wall import Wall
 
 
 class Shooter:
@@ -39,7 +39,7 @@ class Shooter:
         if len(self.bullets) < self.max_bullets:
             bullet_vx = 10 * direction
             bullet_vy = 0
-            bullet = Bullets(self.surface, self.x, self.y, bullet_vx, bullet_vy)
+            bullet = Bullet(self.surface, self.x, self.y, bullet_vx, bullet_vy)
             self.bullets.append(bullet)
 
     def get_rect(self) -> pygame.Rect:

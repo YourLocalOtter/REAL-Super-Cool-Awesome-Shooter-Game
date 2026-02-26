@@ -3,7 +3,7 @@ import sys
 import pygame
 import pygame.locals
 
-from Items import Wall
+from items import Wall
 
 
 def main():

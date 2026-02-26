@@ -1,10 +1,10 @@
 import pygame
 
 pygame.init()
-from Wall import Wall
+from wall import Wall
 
 
-class Bullets:
+class Bullet:
 
     def __init__(
         self, surface: pygame.Surface, x: float, y: float, vx: float, vy: float
