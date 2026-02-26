@@ -4,13 +4,12 @@ import random
 import pygame
 import pygame.locals
 
-from Shooter import Shooters
+from Shooter import Shooter
 from Level import Level
 
 Leval = 0
 
 def main():
-
 
     fps = 60
     fps_clock = pygame.time.Clock()
@@ -28,7 +27,7 @@ def main():
     level = Level(screen, current_level)
     walls = level.get_walls()
     
-    p_left = Shooters(
+    p_left = Shooter(
         screen,
         0.85 * screen.get_width(),
         screen.get_height() / 2,
@@ -41,7 +40,7 @@ def main():
         pygame.K_1,
         "#fbcc4a",
     )
-    p_right = Shooters(
+    p_right = Shooter(
         screen,
         0.1 * screen.get_width(),
         screen.get_height() / 2,
@@ -71,12 +70,12 @@ def main():
 
         
         for bullet in p_left.bullets[:]:
-            if bullet.check_collision(p_right):
+            if bullet.check_collision(p_right.x, p_right.y, p_right.width, p_right.height):
                 right_score += 1
                 p_left.bullets.remove(bullet)
         
         for bullet in p_right.bullets[:]:
-            if bullet.check_collision(p_left):
+            if bullet.check_collision(p_left.x, p_left.y, p_left.width, p_left.height):
                 left_score += 1
                 p_right.bullets.remove(bullet)
         

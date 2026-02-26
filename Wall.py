@@ -1,7 +1,5 @@
 import pygame
 
-pygame.init()
-
 
 class Wall:
     def __init__(

@@ -3,8 +3,6 @@ import pygame
 pygame.init()
 from Wall import Wall
 
-from Shooter import Shooters
-
 
 class Bullets:
 
@@ -55,12 +53,12 @@ class Bullets:
             self.surface, "#ffffff", (int(self.x), int(self.y)), self.radius
         )
 
-    def check_collision(self, shooter: "Shooters") -> bool:
+    def check_collision(self, x: float, y: float, width: float, height: float) -> bool:
         if (
-            self.x - self.radius < shooter.x + shooter.width / 2
-            and self.x + self.radius > shooter.x - shooter.width / 2
-            and self.y - self.radius < shooter.y + shooter.height / 2
-            and self.y + self.radius > shooter.y - shooter.height / 2
+            self.x - self.radius < x + width / 2
+            and self.x + self.radius > x - width / 2
+            and self.y - self.radius < y + height / 2
+            and self.y + self.radius > y - height / 2
         ):
             return True
         return False

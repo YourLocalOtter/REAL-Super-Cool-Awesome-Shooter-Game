@@ -1,13 +1,10 @@
 import pygame
 
-pygame.init()
-pygame.font.init()
-
 from Bullet import Bullets
 from Wall import Wall
 
 
-class Shooters:
+class Shooter:
 
     def __init__(
         self,
