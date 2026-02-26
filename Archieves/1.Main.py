@@ -131,14 +131,75 @@ class Wall:
         rect_y = self.y - self.height / 2
         pygame.draw.rect(self.surface, "#964B00", (rect_x, rect_y, self.width, self.height))
 
+<<<<<<< HEAD:Main_WorkingON/2.(R)Main.py
+<<<<<<< HEAD:copyofmainfortesting/copymain
+class Wall2:
+
+    def __init__(
+        self,
+        surface: pygame.Surface,
+        x: float,
+        y: float,
+        width: float,
+        height: float,
+    ) -> None:
+        self.surface = surface
+        self.x, self.y = x, y
+        self.width, self.height = width, height
+
+
+    def update(self) -> None:
+        return None
+
+    def display(self) -> None:
+        rect_x = self.x - self.width / 2
+        rect_y = self.y - self.height / 2
+        pygame.draw.rect(self.surface, "#964B00", (rect_x, rect_y, self.width, self.height))
+
+class PowerUp_ShootSpeed:
+
+    def __init__(
+        self,
+        surface: pygame.Surface,
+        x: float,
+        y: float,
+        width: float,
+        height: float,
+    ) -> None:
+        self.surface = surface
+        self.x, self.y = x, y
+        self.width, self.height = width, height
+
+    def update(self) -> None:
+        return None
+    
+    def display(self) -> None:
+        rect_x = self.x - self.width / 2
+        rect_y = self.y - self.height / 2
+        pygame.draw.circle(self.surface, "#FF21EA", (rect_x,rect_y), 20, width=0)
+
+class Game:
+=======
+<<<<<<< HEAD:Main_WorkingON/2.(R)Main.py
+=======
+class Level:
+>>>>>>> 05f2bee0d736acb9b49bfaf2e471aebb408cd5ba:Main_WorkingON/2.(R)Main.py
+    ...
+#     class Level1:
+#         ...
+    
+#     class Level2:
+#         ...
+=======
+>>>>>>> 05d385c37323a8ab484e6a885fe4b0485e5f5442:Archieves/1.Main.py
 
 def main():
     fps = 60
     fps_clock = pygame.time.Clock()
     pygame.init()
     
-    screen_width = random.randint(700, 1000)
-    screen_height = random.randint(500, 700)
+    screen_width = 1000
+    screen_height = 700
     screen = pygame.display.set_mode((screen_width, screen_height))
     
     font = pygame.font.Font(None, 48)
@@ -245,6 +306,18 @@ def main():
             screen.blit(win_text, (screen.get_width() / 2 - 200, screen.get_height() / 2 - 50))
             pygame.display.flip()
             pygame.time.wait(3000)
+<<<<<<< HEAD:Main_WorkingON/2.(R)Main.py
+
+            #here once someone wins, import level 2
+            # if winner == True:
+            #     wall = Wall2
+            #     wall2 = Wall2
+            #     wall3 = Wall2
+            #     wall4 = Wall2
+
+
+=======
+>>>>>>> 05d385c37323a8ab484e6a885fe4b0485e5f5442:Archieves/1.Main.py
             pygame.quit()
             sys.exit()
 
@@ -256,6 +329,7 @@ def main():
         screen.blit(
             right_score_image, (0.8 * screen.get_width(), 0.1 * screen.get_height())
         )
+        
         # if state == "start":
         #     screen.fill("#00BE49")
         # elif state == "game":
@@ -276,6 +350,7 @@ def main():
                 if event.key == pygame.K_r:
                     if state == "dead":
                         state = "start"
+
             # elif event.type == pygame.locals.KEYDOWN:
             #     if event.key == pygame.K_SPACE:
             #         if state == "start":
@@ -295,6 +370,10 @@ def main():
         wall3.display()
         wall4.update()
         wall4.display()
+<<<<<<< HEAD:Main_WorkingON/2.(R)Main.py
+    
+=======
+>>>>>>> 05d385c37323a8ab484e6a885fe4b0485e5f5442:Archieves/1.Main.py
 
         pygame.display.flip()
         fps_clock.tick(fps)
