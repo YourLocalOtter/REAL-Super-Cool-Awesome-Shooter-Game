@@ -256,6 +256,7 @@ def main():
         screen.blit(
             right_score_image, (0.8 * screen.get_width(), 0.1 * screen.get_height())
         )
+        
         # if state == "start":
         #     screen.fill("#00BE49")
         # elif state == "game":
@@ -276,6 +277,7 @@ def main():
                 if event.key == pygame.K_r:
                     if state == "dead":
                         state = "start"
+
             # elif event.type == pygame.locals.KEYDOWN:
             #     if event.key == pygame.K_SPACE:
             #         if state == "start":
