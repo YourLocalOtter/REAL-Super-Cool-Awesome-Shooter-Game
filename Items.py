@@ -15,11 +15,12 @@ class Wall:
         self.x, self.y = x, y
         self.width, self.height = width, height
 
-
     def update(self) -> None:
         return None
 
     def display(self) -> None:
         rect_x = self.x - self.width / 2
         rect_y = self.y - self.height / 2
-        pygame.draw.rect(self.surface, "#964B00", (rect_x, rect_y, self.width, self.height))
+        pygame.draw.rect(
+            self.surface, "#964B00", (rect_x, rect_y, self.width, self.height)
+        )

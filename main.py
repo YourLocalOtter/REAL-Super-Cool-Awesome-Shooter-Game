@@ -4,8 +4,10 @@ import random
 import pygame
 import pygame.locals
 
-from Walls.Wall import Wall
-from Shooters import Shooters
+from Shooter import Shooters
+from Level import Level
+
+Leval = 0
 
 def main():
 
@@ -52,11 +54,7 @@ def main():
         pygame.K_RETURN,
         "#8d4fd3",
     )
-    from Levels import Level
 
-    level = Level(screen, 1)
-    walls = level.get_walls()
-    
     while True:
         screen.fill("#82E1FE")
         
@@ -114,8 +112,8 @@ def main():
                 sys.exit()
 
         for wall in walls:
-        wall.update()
-        wall.display()
+            wall.update()
+            wall.display()
 
         pygame.display.flip()
         fps_clock.tick(fps)
