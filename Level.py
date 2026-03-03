@@ -1,4 +1,5 @@
 import pygame
+import sys
 
 pygame.init()
 pygame.font.init()
@@ -21,11 +22,14 @@ class Level:
         if level_num == 1:
             self.walls.append(
                 Wall(self.surface, 0.25 * screen_width, screen_height / 2, 30, 130)
-            )
+            )          
             self.walls.append(
                 Wall(self.surface, 0.75 * screen_width, screen_height / 2, 30, 130)
             )
         elif level_num == 2:
+            background_image = pygame.image.load("nightbg.png")
+            background_image = pygame.transform.scale(background_image, (screen_width, screen_height))
+            self.surface.blit(background_image, (0, 0))
             self.walls.append(
                 Wall(self.surface, 0.5 * screen_width, screen_height / 3.8, 30, 160)
             )
@@ -33,6 +37,9 @@ class Level:
                 Wall(self.surface, 0.5 * screen_width, screen_height / 1.28, 30, 160)
             )
         elif level_num == 3:
+            background_image = pygame.image.load("finalbg.png")
+            background_image = pygame.transform.scale(background_image, (screen_width, screen_height)) 
+            self.surface.blit(background_image, (0, 0))         
             for i in range(1, 4):
                 self.walls.append(
                     Wall(

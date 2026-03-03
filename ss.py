@@ -64,7 +64,7 @@ def start_screen():
             screen.blit(subtitle, subtitle_rect)
             
             mouse_pos = pygame.mouse.get_pos()
-            button_color = "#ff6b6b" if button_rect.collidepoint(mouse_pos) else "#673709"
+            button_color = "#ff7746" if button_rect.collidepoint(mouse_pos) else "#673709"
             pygame.draw.rect(screen, button_color, button_rect, border_radius=10)
             
             button_text = font_medium.render("START", True, "#ffffff")
@@ -90,7 +90,7 @@ def start_screen():
                 y_offset += 60
         
         mouse_pos = pygame.mouse.get_pos()
-        rules_button_color = "#ff6b6b" if rules_button_rect.collidepoint(mouse_pos) else "#80f4ec"
+        rules_button_color = "#ff7746" if rules_button_rect.collidepoint(mouse_pos) else "#80f4ec"
         pygame.draw.rect(screen, rules_button_color, rules_button_rect, border_radius=10)
         
         rules_button_text = font_small.render("RULES", True, "#ffffff")

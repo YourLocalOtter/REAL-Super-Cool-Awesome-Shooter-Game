@@ -22,7 +22,6 @@ def main():
     font = pygame.font.Font(None, 32)
     left_score = 0
     right_score = 0
-
     current_level = 1
     level = Level(screen, current_level)
     walls = level.get_walls()
