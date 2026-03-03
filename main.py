@@ -2,12 +2,9 @@ import sys
 import random
 
 import pygame
-import pygame.locals
 
 from shooter import Shooter
 from level import Level
-
-Leval = 0
 
 def main():
 
@@ -22,7 +19,7 @@ def main():
     background_image = pygame.image.load("background.jpg")
     background_image = pygame.transform.scale(background_image, (screen_width, screen_height))
     
-    font = pygame.font.Font(None, 48)
+    font = pygame.font.Font(None, 32)
     left_score = 0
     right_score = 0
 
@@ -58,13 +55,12 @@ def main():
     )
 
     while True:
-        running = True
-        while running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-            screen.blit(background_image, (0, 0))
-
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+        
+        screen.blit(background_image, (0, 0))
         
         keys_held = pygame.key.get_pressed()
         if keys_held[p_left.key_shoot]:
@@ -113,11 +109,6 @@ def main():
         screen.blit(
         right_score_image, (0.8 * screen.get_width(), 0.1 * screen.get_height())
         )
-
-        for event in pygame.event.get():
-            if event.type == pygame.locals.QUIT:
-                pygame.quit()
-                sys.exit()
 
         for wall in walls:
             wall.update()
