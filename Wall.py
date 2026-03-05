@@ -1,6 +1,5 @@
 import pygame
 
-
 class Wall:
     def __init__(
         self, surface: pygame.Surface, x: float, y: float, width: float, height: float

@@ -18,17 +18,15 @@ def main():
         screen.get_height() / 2,
         30,
         130,
-
     )
-
 
     wall2 = Wall(
         screen,
-        0.75 * screen.get_width(), #place on screen on the x value
+        0.75 * screen.get_width(),  # place on screen on the x value
         screen.get_height() / 2,
         30,
         130,
-#y position, width, length
+        # y position, width, length
     )
 
     wall3 = Wall(
@@ -37,9 +35,7 @@ def main():
         screen.get_height() / 3.8,
         30,
         160,
-
     )
-
 
     wall4 = Wall(
         screen,
@@ -47,10 +43,7 @@ def main():
         screen.get_height() / 1.28,
         30,
         160,
-
     )
-
-
 
     while True:
         screen.fill("#000000")
