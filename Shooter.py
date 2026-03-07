@@ -1,7 +1,7 @@
 import pygame
 
-from bullet import Bullet
-from wall import Wall
+from Bullet import Bullet
+from Wall import Wall
 
 
 class Shooter:
@@ -34,6 +34,7 @@ class Shooter:
         self.bullets = []
         self.max_bullets = 1
         self.color = color
+        self.frozen_until = 0
 
     def shoot(self, direction: int) -> None:
         if len(self.bullets) < self.max_bullets:
@@ -49,11 +50,17 @@ class Shooter:
             int(self.width),
             int(self.height),
         )
+    
 
     def update(self, walls: list["Wall"]) -> None:
         keys_held = pygame.key.get_pressed()
-        self.vx = self.speed * (keys_held[self.key_right] - keys_held[self.key_left])
-        self.vy = self.speed * (keys_held[self.key_down] - keys_held[self.key_up])
+        if pygame.time.get_ticks() < self.frozen_until:
+            self.vx = 0
+            self.vy = 0
+        else:
+            self.vx = self.speed * (keys_held[self.key_right] - keys_held[self.key_left])
+            self.vy = self.speed * (keys_held[self.key_down] - keys_held[self.key_up])
+            
         rect = self.get_rect()
         rect.x += int(self.vx)
 
@@ -91,6 +98,9 @@ class Shooter:
         for bullet in self.bullets[:]:
             if not bullet.update(walls):
                 self.bullets.remove(bullet)
+
+    def freeze_for(self, milliseconds: int) -> None:
+        self.frozen_until = pygame.time.get_ticks() + milliseconds
 
     def display(self) -> None:
         rect_x = self.x - self.width / 2

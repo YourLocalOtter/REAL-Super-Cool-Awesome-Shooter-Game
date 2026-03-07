@@ -4,8 +4,8 @@ import random
 import pygame
 import time
 
-from shooter import Shooter
-from level import Level
+from Shooter import Shooter
+from Level import Level
 
 
 def main():
@@ -26,9 +26,20 @@ def main():
     font = pygame.font.Font(None, 32)
     left_score = 0
     right_score = 0
+<<<<<<< HEAD
     current_level = 1
     level = Level(screen, current_level)
     walls = level.get_walls()
+=======
+
+
+
+    current_level = 1
+    level = Level(screen, current_level)
+    walls = level.get_walls()
+    
+    
+>>>>>>> c8e05a2a55d708a95857d675440df292480e17bc
 
     p_left = Shooter(
         screen,
@@ -57,6 +68,7 @@ def main():
         "#8d4fd3",
     )
 
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -76,6 +88,13 @@ def main():
         p_left.display()
         p_right.display()
 
+<<<<<<< HEAD
+=======
+        OtherFreeze = level.get_otherplayerfreeze()
+        ShooterSpeed = level.get_shootingspeed()
+
+        
+>>>>>>> c8e05a2a55d708a95857d675440df292480e17bc
         for bullet in p_left.bullets[:]:
             if bullet.check_collision(
                 p_right.x, p_right.y, p_right.width, p_right.height
@@ -88,6 +107,26 @@ def main():
                 left_score += 1
                 p_right.bullets.remove(bullet)
 
+<<<<<<< HEAD
+=======
+        for powerup in OtherFreeze:
+            if powerup.check_collision(p_left.x, p_left.y, p_left.width, p_left.height):
+                p_left.speed *= 2
+                powerup.teleport_offscreen()
+            if powerup.check_collision(p_right.x, p_right.y, p_right.width, p_right.height):
+                p_right.speed *= 2
+                powerup.teleport_offscreen()
+
+        for shootingspeed in ShooterSpeed[:]:
+            if shootingspeed.check_collision(p_left.x, p_left.y, p_left.width, p_left.height):
+                shootingspeed.teleport_offscreen()
+                p_right.freeze_for(5000)
+            elif shootingspeed.check_collision(p_right.x, p_right.y, p_right.width, p_right.height):
+                shootingspeed.teleport_offscreen()
+                p_left.freeze_for(5000)
+        
+        
+>>>>>>> c8e05a2a55d708a95857d675440df292480e17bc
         if left_score >= 5 or right_score >= 5:
             current_level += 1
             if current_level > 3:
@@ -104,7 +143,12 @@ def main():
                 sys.exit()
             level = Level(screen, current_level)
             walls = level.get_walls()
+<<<<<<< HEAD
 
+=======
+            
+        
+>>>>>>> c8e05a2a55d708a95857d675440df292480e17bc
             left_score = 0
             right_score = 0
 
@@ -120,6 +164,13 @@ def main():
         for wall in walls:
             wall.update()
             wall.display()
+        for otherplayerfreeze in OtherFreeze:
+            otherplayerfreeze.update()
+            otherplayerfreeze.display()
+        for shootingspeed in ShooterSpeed:
+            shootingspeed.update()
+            shootingspeed.display()
+    
 
         pygame.display.flip()
         fps_clock.tick(fps)

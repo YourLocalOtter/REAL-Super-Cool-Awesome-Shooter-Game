@@ -129,6 +129,7 @@ def start_screen():
         pygame.display.flip()
         clock.tick(60)
 
+<<<<<<< HEAD
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -139,3 +140,7 @@ def start_screen():
 
 if __name__ == "__main__":
     start_screen()
+=======
+if __name__ == "__main__": 
+    start_screen()
+>>>>>>> c8e05a2a55d708a95857d675440df292480e17bc
