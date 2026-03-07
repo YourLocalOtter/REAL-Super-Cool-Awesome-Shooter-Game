@@ -4,7 +4,12 @@ from main import main
 
 
 def start_screen():
+
     pygame.init()
+    pygame.mixer.init()
+    pygame.mixer.music.load("SMBH.mp3")
+    pygame.mixer.music.set_volume(0.05)
+    pygame.mixer.music.play(-1)
 
     screen_width = 800
     screen_height = 600
@@ -49,6 +54,11 @@ def start_screen():
     show_rules = False
     running = True
 
+    background_image = pygame.image.load("sunset.png")
+    background_image = pygame.transform.scale(
+        background_image, (screen_width, screen_height)
+    )
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -61,16 +71,13 @@ def start_screen():
                 if rules_button_rect.collidepoint(event.pos):
                     show_rules = not show_rules
 
-        background_image = pygame.image.load("sunset.png")
-        background_image = pygame.transform.scale(
-            background_image, (screen_width, screen_height)
-        )
         screen.blit(background_image, (0, 0))
 
         if not show_rules:
             title = font_large.render(
                 "SUPER COOL & AWESOME SHOOTER GAME", True, "#ffe7ae"
             )
+            pygame.draw.rect(screen, "#ff7746", (20, 135, 760, 50), border_radius=8)
             title_rect = title.get_rect(center=(screen_width // 2, 160))
             screen.blit(title, title_rect)
 
@@ -119,7 +126,13 @@ def start_screen():
             center=rules_button_rect.center
         )
         screen.blit(rules_button_text, rules_button_text_rect)
+        pygame.display.flip()
+        clock.tick(60)
 
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
         pygame.display.flip()
         clock.tick(60)
 
