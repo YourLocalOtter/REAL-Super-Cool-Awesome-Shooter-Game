@@ -1,7 +1,7 @@
 import pygame
 
 pygame.init()
-from wall import Wall
+from Wall import Wall
 
 
 class Bullet:

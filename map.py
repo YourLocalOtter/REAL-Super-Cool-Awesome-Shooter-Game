@@ -3,13 +3,9 @@ import sys
 import pygame
 import pygame.locals
 
-<<<<<<< HEAD:Map1.py
 from Wall import Wall
 from Powerup_SS import ShootingSpeed
 from Powerup_OPF import PowerUp_OtherPlayerFreeze
-=======
-from items import Wall
->>>>>>> 856b37c5f616e0e49372e358da22b883d5f9a79d:map.py
 
 
 def main():

@@ -4,6 +4,8 @@ pygame.init()
 pygame.font.init()
 
 from Wall import Wall
+from Powerup_OPF import PowerUp_OtherPlayerFreeze
+from Powerup_SS import ShootingSpeed
 
 
 class Level:
@@ -17,6 +19,9 @@ class Level:
 
     def load_level(self, level_num: int) -> None:
         self.walls = []
+        self.OtherFreeze = []
+        self.ShooterSpeed = []
+
         screen_width = self.surface.get_width()
         screen_height = self.surface.get_height()
 
@@ -27,23 +32,25 @@ class Level:
             self.walls.append(
                 Wall(self.surface, 0.75 * screen_width, screen_height / 2, 30, 130)
             )
+
         elif level_num == 2:
             self.walls.append(
                 Wall(self.surface, 0.5 * screen_width, screen_height / 3.85, 30, 160)
             )
-            
             self.walls.append(
                 Wall(self.surface, 0.5 * screen_width, screen_height / 1.28, 30, 160)
             )
 
-            from Powerup_OPF import PowerUp_OtherPlayerFreeze
             self.OtherFreeze.append(
-                PowerUp_OtherPlayerFreeze(self.surface, 0.3 * screen_width, screen_height / 3, 20, 100)
+                PowerUp_OtherPlayerFreeze(
+                    self.surface, 0.3 * screen_width, screen_height / 3, 20, 100
+                )
             )
             self.OtherFreeze.append(
-                PowerUp_OtherPlayerFreeze(self.surface, 0.7 * screen_width, screen_height / 3, 20, 100)
+                PowerUp_OtherPlayerFreeze(
+                    self.surface, 0.7 * screen_width, screen_height / 3, 20, 100
+                )
             )
-
 
         elif level_num == 3:
             for i in range(1, 4):
@@ -57,25 +64,29 @@ class Level:
                     )
                 )
 
-                self.ShooterSpeed.append(
-                    ShootingSpeed(self.surface, 0.3 * screen_width, screen_height / 3, 20, 100)
+            self.ShooterSpeed.append(
+                ShootingSpeed(
+                    self.surface, 0.3 * screen_width, screen_height / 3, 20, 100
                 )
-                self.ShooterSpeed.append(
-                    ShootingSpeed(self.surface, 0.7 * screen_width, screen_height / 3, 20, 100)
+            )
+            self.ShooterSpeed.append(
+                ShootingSpeed(
+                    self.surface, 0.7 * screen_width, screen_height / 3, 20, 100
                 )
+            )
 
     def add_wall(self, wall: "Wall") -> None:
         self.walls.append(wall)
 
     def get_walls(self) -> list:
         return self.walls
-    
+
     def add_otherFreeze(self, otherFreeze: "PowerUp_OtherPlayerFreeze") -> None:
         self.OtherFreeze.append(otherFreeze)
-    
+
     def get_otherplayerfreeze(self) -> list:
         return self.OtherFreeze
-    
+
     def add_shooterSpeed(self, shooterSpeed: "ShootingSpeed") -> None:
         self.ShooterSpeed.append(shooterSpeed)
 

@@ -29,6 +29,8 @@ def main():
     level = Level(screen, current_level)
     walls = level.get_walls()
     
+    
+
     p_left = Shooter(
         screen,
         0.85 * screen.get_width(),
