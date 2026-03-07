@@ -2,10 +2,10 @@ import sys
 import random
 
 import pygame
-import time
 
-from Shooter import Shooter
-from Level import Level
+from shooter import Shooter
+from level import Level
+from Archieves.deathscreen import DeathScreen
 
 
 def main():
@@ -26,20 +26,11 @@ def main():
     font = pygame.font.Font(None, 32)
     left_score = 0
     right_score = 0
-<<<<<<< HEAD
+    left_hits = 0
+    right_hits = 0
     current_level = 1
     level = Level(screen, current_level)
     walls = level.get_walls()
-=======
-
-
-
-    current_level = 1
-    level = Level(screen, current_level)
-    walls = level.get_walls()
-    
-    
->>>>>>> c8e05a2a55d708a95857d675440df292480e17bc
 
     p_left = Shooter(
         screen,
@@ -68,6 +59,14 @@ def main():
         "#8d4fd3",
     )
 
+    DEATH_SCREEN_MS = 1500
+    font_large = pygame.font.Font(None, 72)
+    font_small = pygame.font.Font(None, 32)
+
+    game_state = "playing"
+    death_started_at = 0
+    loser = None
+    winner = None
 
     while True:
         for event in pygame.event.get():
@@ -88,13 +87,9 @@ def main():
         p_left.display()
         p_right.display()
 
-<<<<<<< HEAD
-=======
         OtherFreeze = level.get_otherplayerfreeze()
         ShooterSpeed = level.get_shootingspeed()
 
-        
->>>>>>> c8e05a2a55d708a95857d675440df292480e17bc
         for bullet in p_left.bullets[:]:
             if bullet.check_collision(
                 p_right.x, p_right.y, p_right.width, p_right.height
@@ -107,50 +102,98 @@ def main():
                 left_score += 1
                 p_right.bullets.remove(bullet)
 
-<<<<<<< HEAD
-=======
         for powerup in OtherFreeze:
             if powerup.check_collision(p_left.x, p_left.y, p_left.width, p_left.height):
                 p_left.speed *= 2
                 powerup.teleport_offscreen()
-            if powerup.check_collision(p_right.x, p_right.y, p_right.width, p_right.height):
+            if powerup.check_collision(
+                p_right.x, p_right.y, p_right.width, p_right.height
+            ):
                 p_right.speed *= 2
                 powerup.teleport_offscreen()
 
         for shootingspeed in ShooterSpeed[:]:
-            if shootingspeed.check_collision(p_left.x, p_left.y, p_left.width, p_left.height):
+            if shootingspeed.check_collision(
+                p_left.x, p_left.y, p_left.width, p_left.height
+            ):
                 shootingspeed.teleport_offscreen()
                 p_right.freeze_for(5000)
-            elif shootingspeed.check_collision(p_right.x, p_right.y, p_right.width, p_right.height):
+            elif shootingspeed.check_collision(
+                p_right.x, p_right.y, p_right.width, p_right.height
+            ):
                 shootingspeed.teleport_offscreen()
                 p_left.freeze_for(5000)
-        
-        
->>>>>>> c8e05a2a55d708a95857d675440df292480e17bc
-        if left_score >= 5 or right_score >= 5:
-            current_level += 1
-            if current_level > 3:
-                winner = "Left Player" if left_score > right_score else "Right Player"
-                font_large = pygame.font.Font(None, 72)
-                win_text = font_large.render(f"{winner} Wins!", True, "#ffffff")
-                screen.blit(
-                    win_text,
-                    (screen.get_width() / 2 - 200, screen.get_height() / 2 - 50),
-                )
-                pygame.display.flip()
-                pygame.time.wait(3000)
-                pygame.quit()
-                sys.exit()
-            level = Level(screen, current_level)
-            walls = level.get_walls()
-<<<<<<< HEAD
 
-=======
-            
-        
->>>>>>> c8e05a2a55d708a95857d675440df292480e17bc
-            left_score = 0
-            right_score = 0
+        if game_state == "playing":
+            if left_score >= 5 or right_score >= 5:
+                current_level += 1
+                if current_level > 3:
+                    for bullet in p_left.bullets[:]:
+                        if bullet.check_collision(
+                            p_right.x, p_right.y, p_right.width, p_right.height
+                        ):
+                            right_score += 1
+                            right_hits += 1
+                            p_left.bullets.remove(bullet)
+                            if right_hits >= 10:
+                                death_screen = DeathScreen(screen_width, screen_height)
+                                death_screen.display(screen)
+                                pygame.time.wait(3000)
+                                left_hits = 0
+                                right_hits = 0
+                                left_score = 0
+                                right_score = 0
+
+                    for bullet in p_right.bullets[:]:
+                        if bullet.check_collision(
+                            p_left.x, p_left.y, p_left.width, p_left.height
+                        ):
+                            left_score += 1
+                            left_hits += 1
+                            p_right.bullets.remove(bullet)
+                            if left_hits or right_hits >= 10:
+                                death_screen = DeathScreen(screen_width, screen_height)
+                                death_screen.display(screen)
+                                pygame.time.wait(3000)
+                                left_hits = 0
+                                right_hits = 0
+                                left_score = 0
+                                right_score = 0
+                    winner = "Right Player" if right_hits >= 10 else "Left Player"
+                    win_text = font_large.render(f"{winner} Wins!", True, "#ffffff")
+                    screen.blit(
+                        win_text,
+                        (screen.get_width() / 2 - 200, screen.get_height() / 2 - 50),
+                    )
+                    pygame.display.flip()
+                    pygame.time.wait(3000)
+                    pygame.quit()
+                    sys.exit()
+                level = Level(screen, current_level)
+                walls = level.get_walls()
+
+                left_score = 0
+                right_score = 0
+
+        elif game_state == "death":
+            screen.fill((10, 10, 10))
+            death_text = font_large.render(f"{loser} PLAYER DIED", True, (255, 80, 80))
+            tip_text = font_small.render(
+                "Preparing winner screen...", True, (220, 220, 220)
+            )
+            screen.blit(
+                death_text,
+                death_text.get_rect(
+                    center=(screen_width // 2, screen_height // 2 - 20)
+                ),
+            )
+            screen.blit(
+                tip_text,
+                tip_text.get_rect(center=(screen_width // 2, screen_height // 2 + 30)),
+            )
+
+            if pygame.time.get_ticks() - death_started_at >= DEATH_SCREEN_MS:
+                game_state = "winner"
 
         right_score_image = font.render(f"{right_score}", True, "#ffffff")
         left_score_image = font.render(f"{left_score}", True, "#ffffff")
@@ -170,7 +213,10 @@ def main():
         for shootingspeed in ShooterSpeed:
             shootingspeed.update()
             shootingspeed.display()
-    
 
         pygame.display.flip()
         fps_clock.tick(fps)
+
+
+if __name__ == "__main__":
+    main()

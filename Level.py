@@ -1,10 +1,9 @@
 import pygame
-import sys
 
 pygame.init()
 pygame.font.init()
 
-from Wall import Wall
+from wall import Wall
 from Powerup_OPF import PowerUp_OtherPlayerFreeze
 from Powerup_SS import ShootingSpeed
 
@@ -59,7 +58,7 @@ class Level:
         elif level_num == 3:
             background_image = pygame.image.load("finalbg.png")
             background_image = pygame.transform.scale(background_image, (screen_width, screen_height)) 
-            self.surface.blit(background_image, (0, 0))         
+            self.surface.blit(background_image, (0, 0))       
             for i in range(1, 4):
                 self.walls.append(
                     Wall(

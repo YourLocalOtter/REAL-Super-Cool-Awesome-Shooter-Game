@@ -1,6 +1,5 @@
 import pygame
 import sys
-from main import main
 
 
 def start_screen():
@@ -27,21 +26,6 @@ def start_screen():
     button_y = screen_height // 2 + 100
     button_rect = pygame.Rect(button_x, button_y, button_width, button_height)
 
-    rules_button_width = 150
-    rules_button_height = 50
-    rules_button_rect = pygame.Rect(
-        screen_width // 2 - rules_button_width // 2,
-        button_y + 80,
-        rules_button_width,
-        rules_button_height,
-    )
-
-    button_width = 200
-    button_height = 60
-    button_x = screen_width // 2 - button_width // 2
-    button_y = screen_height // 2 + 100
-    button_rect = pygame.Rect(button_x, button_y, button_width, button_height)
-
     rules_button_width = 100
     rules_button_height = 50
     rules_button_rect = pygame.Rect(
@@ -50,9 +34,17 @@ def start_screen():
         rules_button_width,
         rules_button_height,
     )
-
     show_rules = False
     running = True
+    mute_button_width = 100
+    mute_button_height = 50
+    mute_button_rect = pygame.Rect(
+        10,
+        screen_height - mute_button_height - 10,
+        mute_button_width,
+        mute_button_height,
+    )
+    is_muted = False
 
     background_image = pygame.image.load("sunset.png")
     background_image = pygame.transform.scale(
@@ -66,10 +58,18 @@ def start_screen():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if button_rect.collidepoint(event.pos):
-                    pygame.quit()
+                    running = False
+                    from main import main
+
                     main()
                 if rules_button_rect.collidepoint(event.pos):
                     show_rules = not show_rules
+                if mute_button_rect.collidepoint(event.pos):
+                    is_muted = not is_muted
+                    if is_muted:
+                        pygame.mixer.music.set_volume(0)
+                    else:
+                        pygame.mixer.music.set_volume(0.05)
 
         screen.blit(background_image, (0, 0))
 
@@ -102,7 +102,7 @@ def start_screen():
             rules = [
                 "Left Player: W/A/S/D to move, 1 to shoot",
                 "Right Player: Arrow keys to move, Return to shoot",
-                "First to hit opponent 3 times wins",
+                "First to hit opponent 10 times wins",
                 "Unlimited bullets",
             ]
 
@@ -126,21 +126,20 @@ def start_screen():
             center=rules_button_rect.center
         )
         screen.blit(rules_button_text, rules_button_text_rect)
-        pygame.display.flip()
-        clock.tick(60)
 
-<<<<<<< HEAD
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
+        mute_button_color = (
+            "#ff7746" if mute_button_rect.collidepoint(mouse_pos) else "#80f4ec"
+        )
+        pygame.draw.rect(screen, mute_button_color, mute_button_rect, border_radius=10)
+        mute_text = font_small.render(
+            "MUTE" if not is_muted else "UNMUTE", True, "#ffffff"
+        )
+        mute_text_rect = mute_text.get_rect(center=mute_button_rect.center)
+        screen.blit(mute_text, mute_text_rect)
+
         pygame.display.flip()
         clock.tick(60)
 
 
 if __name__ == "__main__":
     start_screen()
-=======
-if __name__ == "__main__": 
-    start_screen()
->>>>>>> c8e05a2a55d708a95857d675440df292480e17bc

@@ -1,7 +1,7 @@
 import pygame
 
-from Bullet import Bullet
-from Wall import Wall
+from bullet import Bullet
+from wall import Wall
 
 
 class Shooter:
@@ -50,7 +50,6 @@ class Shooter:
             int(self.width),
             int(self.height),
         )
-    
 
     def update(self, walls: list["Wall"]) -> None:
         keys_held = pygame.key.get_pressed()
@@ -58,9 +57,11 @@ class Shooter:
             self.vx = 0
             self.vy = 0
         else:
-            self.vx = self.speed * (keys_held[self.key_right] - keys_held[self.key_left])
+            self.vx = self.speed * (
+                keys_held[self.key_right] - keys_held[self.key_left]
+            )
             self.vy = self.speed * (keys_held[self.key_down] - keys_held[self.key_up])
-            
+
         rect = self.get_rect()
         rect.x += int(self.vx)
 
@@ -110,4 +111,10 @@ class Shooter:
         )
 
         for bullet in self.bullets:
-            bullet.display()
+            image = pygame.image.load("pngegg.png")
+            image = pygame.transform.scale(image, (int(self.width), int(self.height)))
+            rect = image.get_rect(center=(int(self.x), int(self.y)))
+            self.surface.blit(image, rect)
+
+            for bullet in self.bullets:
+                bullet.display()

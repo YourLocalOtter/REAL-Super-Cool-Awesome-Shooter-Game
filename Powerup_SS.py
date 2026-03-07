@@ -1,5 +1,6 @@
 import pygame
 
+
 class ShootingSpeed:
 
     def __init__(
@@ -30,6 +31,6 @@ class ShootingSpeed:
         ):
             return True
         return False
-    
+
     def display(self) -> None:
         pygame.draw.circle(self.surface, "#FF007F", (int(self.x), int(self.y)), 20)

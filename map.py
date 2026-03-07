@@ -3,7 +3,7 @@ import sys
 import pygame
 import pygame.locals
 
-from Wall import Wall
+from wall import Wall
 from Powerup_SS import ShootingSpeed
 from Powerup_OPF import PowerUp_OtherPlayerFreeze
 
@@ -19,29 +19,15 @@ def main():
         0.75 * screen.get_width(),
         screen.get_height() / 1.2,
         30,
-<<<<<<< HEAD
         130,
-=======
-        160,
-
->>>>>>> c8e05a2a55d708a95857d675440df292480e17bc
     )
 
     wall2 = Wall(
         screen,
-<<<<<<< HEAD
-        0.75 * screen.get_width(),  # place on screen on the x value
+        0.75 * screen.get_width(),
         screen.get_height() / 2,
         30,
         130,
-        # y position, width, length
-=======
-        0.50 * screen.get_width(), #place on screen on the x value
-        screen.get_height() / 2.0,
-        30,
-        160,
-#y position, width, length
->>>>>>> c8e05a2a55d708a95857d675440df292480e17bc
     )
 
     wall3 = Wall(
@@ -52,31 +38,7 @@ def main():
         160,
     )
 
-<<<<<<< HEAD
     wall4 = Wall(
-=======
-    otherplayerfreeze = PowerUp_OtherPlayerFreeze(
->>>>>>> c8e05a2a55d708a95857d675440df292480e17bc
-        screen,
-        0.3 * screen.get_width(),
-        screen.get_height() / 1,
-        30,
-        160,
-<<<<<<< HEAD
-=======
-    )
-
-    otherplayerfreeze2 = PowerUp_OtherPlayerFreeze(
-        screen,
-        0.80 * screen.get_width(),
-        screen.get_height() / 4,
-        30,
-        160,
-    )
-
-
-
-    shootingspeed = ShootingSpeed(
         screen,
         0.3 * screen.get_width(),
         screen.get_height() / 1,
@@ -84,14 +46,10 @@ def main():
         160,
     )
 
-    shootingspeed2 = ShootingSpeed(
-        screen,
-        0.80 * screen.get_width(),
-        screen.get_height() / 4,
-        30,
-        160,
->>>>>>> c8e05a2a55d708a95857d675440df292480e17bc
-    )
+    otherplayerfreeze = PowerUp_OtherPlayerFreeze(screen, 150, 100, 30, 30)
+    otherplayerfreeze2 = PowerUp_OtherPlayerFreeze(screen, 600, 400, 30, 30)
+    shootingspeed = ShootingSpeed(screen, 300, 200, 30, 30)
+    shootingspeed2 = ShootingSpeed(screen, 700, 500, 30, 30)
 
     while True:
         screen.fill("#000000")
