@@ -4,10 +4,6 @@ pygame.init()
 pygame.font.init()
 
 from Wall import Wall
-from Powerup_OPF import PowerUp_OtherPlayerFreeze
-from Powerup_SS import ShootingSpeed
-
-
 
 
 class Level:
