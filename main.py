@@ -3,14 +3,8 @@ import random
 
 import pygame
 
-<<<<<<< HEAD
 from Shooter import Shooter
 from Level import Level
-
-=======
-from shooter import Shooter
-from level import Level
->>>>>>> 856b37c5f616e0e49372e358da22b883d5f9a79d
 
 def main():
 
