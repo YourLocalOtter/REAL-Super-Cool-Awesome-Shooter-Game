@@ -7,7 +7,6 @@ import pygame.locals
 from Shooter import Shooter
 from Level import Level
 
-Leval = 0
 
 def main():
 
@@ -22,6 +21,8 @@ def main():
     font = pygame.font.Font(None, 48)
     left_score = 0
     right_score = 0
+
+
 
     current_level = 1
     level = Level(screen, current_level)
@@ -54,6 +55,7 @@ def main():
         "#8d4fd3",
     )
 
+
     while True:
         screen.fill("#82E1FE")
         
@@ -68,6 +70,9 @@ def main():
         p_left.display()
         p_right.display()
 
+        OtherFreeze = level.get_otherplayerfreeze()
+        ShooterSpeed = level.get_shootingspeed()
+
         
         for bullet in p_left.bullets[:]:
             if bullet.check_collision(p_right.x, p_right.y, p_right.width, p_right.height):
@@ -78,6 +83,23 @@ def main():
             if bullet.check_collision(p_left.x, p_left.y, p_left.width, p_left.height):
                 left_score += 1
                 p_right.bullets.remove(bullet)
+
+        for powerup in OtherFreeze:
+            if powerup.check_collision(p_left.x, p_left.y, p_left.width, p_left.height):
+                p_left.speed *= 2
+                powerup.teleport_offscreen()
+            if powerup.check_collision(p_right.x, p_right.y, p_right.width, p_right.height):
+                p_right.speed *= 2
+                powerup.teleport_offscreen()
+
+        for shootingspeed in ShooterSpeed[:]:
+            if shootingspeed.check_collision(p_left.x, p_left.y, p_left.width, p_left.height):
+                shootingspeed.teleport_offscreen()
+                p_right.freeze_for(5000)
+            elif shootingspeed.check_collision(p_right.x, p_right.y, p_right.width, p_right.height):
+                shootingspeed.teleport_offscreen()
+                p_left.freeze_for(5000)
+        
         
         if left_score >= 5 or right_score >= 5:
             current_level += 1
@@ -92,7 +114,8 @@ def main():
                     sys.exit()
             level = Level(screen, current_level)
             walls = level.get_walls()
-    
+            
+        
             left_score = 0
             right_score = 0
         
@@ -113,6 +136,13 @@ def main():
         for wall in walls:
             wall.update()
             wall.display()
+        for otherplayerfreeze in OtherFreeze:
+            otherplayerfreeze.update()
+            otherplayerfreeze.display()
+        for shootingspeed in ShooterSpeed:
+            shootingspeed.update()
+            shootingspeed.display()
+    
 
         pygame.display.flip()
         fps_clock.tick(fps)
